@@ -6,8 +6,10 @@ const store={get:k=>{try{return JSON.parse(localStorage.getItem(k))||[]}catch(e)
 /* Price format: selling prices without a comma (reads as smaller), struck-out actual prices with a comma (reads as larger) */
 const inr=n=>n==null?'Price on request':String(Math.round(Number(n)));
 const inrWas=n=>Number(n).toLocaleString('en-IN');
-const CFG=Object.assign({whatsappNumber:'',siteUrl:''},window.AANGAN_CONFIG||{});
-const off=p=>p.price!=null&&p.mrp&&p.mrp>p.price?Math.round((p.mrp-p.price)/p.mrp*100):0;
+const CFG=Object.assign({whatsappNumber:'',siteUrl:'',instagramUrl:'',salePercent:null,saleLabel:'Sale offers',saleHeadline:''},window.AANGAN_CONFIG||{});
+/* every WhatsApp link on the site uses the number in js/config.js */
+const wa=text=>`https://wa.me/${String(CFG.whatsappNumber).replace(/\D/g,'')}${text?`?text=${encodeURIComponent(text)}`:''}`;
+const off=p=>{if(!(p.price!=null&&p.mrp&&p.mrp>p.price))return 0;const r=Math.round((p.mrp-p.price)/p.mrp*100);return CFG.salePercent?Math.min(r,CFG.salePercent):r};
 const offer=p=>off(p)?` <s class="was">${inrWas(p.mrp)}</s> <span class="off">${off(p)}% off</span>`:'';
 const ic={s:'<circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/>',b:'<path d="M5 8h14l-1 12H6zM9 8a3 3 0 0 1 6 0"/>',m:'<path d="M4 8h16M4 16h16"/>',x:'<path d="M6 6l12 12M18 6 6 18"/>'};
 const svg=k=>`<svg viewBox="0 0 24 24" aria-hidden="true">${ic[k]}</svg>`;
@@ -19,21 +21,21 @@ const hdr=`<div class="announce">Handcrafted with love. Inspired by tradition.</
 <header class="site-header"><div class="container toprow">
 <div class="hs"><a class="emb" href="index.html" aria-label="AANGAN home"><img src="images/brand/aangan-lotus.png" alt="AANGAN lotus" width="245" height="145"></a></div>
 <a class="logo" href="index.html" aria-label="AANGAN home"><img src="images/logo/aangan-wordmark.png" alt="AANGAN" width="213" height="34"></a>
-<div class="hs end"><button class="tb srch" data-open="search" aria-label="Search">${svg('s')}</button><button class="tb" data-open="bag" aria-label="Shopping bag">${svg('b')}<span class="bagl">Bag</span><span class="bcn" id="bc"></span></button></div></div></header>
+<div class="hs end"><button class="tb" data-open="bag" aria-label="Shopping bag">${svg('b')}<span class="bagl">Bag</span><span class="bcn" id="bc"></span></button></div></div></header>
 <div class="scrim" id="scrim"></div>
-<aside class="panel" id="p-search" aria-label="Search"><button class="ib" data-close aria-label="Close">${svg('x')}</button><h3>Search</h3><input id="q" type="search" placeholder="Search our catalogue" aria-label="Search products"><div id="qr" class="mt-3"></div></aside>
+<aside class="panel" id="p-custom" aria-label="Request a custom creation"><button class="ib" data-close aria-label="Close">${svg('x')}</button><h3>Custom creation</h3><div id="cc"></div></aside>
 <aside class="panel" id="p-bag" aria-label="Shopping bag"><button class="ib" data-close aria-label="Close">${svg('x')}</button><h3>Your bag</h3><div id="bl"></div><div id="bf"></div></aside>`;
 const ft=`<footer class="foot"><div class="container">
-<div class="fcta"><div><h2>Imagine it in your home.</h2><p>Have a corner, a celebration or a gift in mind? Tell us and we will explore a creation made for you.</p></div><a class="btn-a" href="personalised-creations.html#custom">Request a custom creation <i>→</i></a></div>
+<div class="fcta"><div><h2>Imagine it in your home.</h2><p>Have a corner, a celebration or a gift in mind? Tell us and we will explore a creation made for you.</p></div><button class="btn-a" type="button" data-open="custom">Request a custom creation <i>→</i></button></div>
 <img class="fwm" src="images/logo/aangan-wordmark.png" alt="AANGAN" width="800" height="128"><p class="ftag">Where Tradition Glows.</p>
-<div class="row g-4 mt-4"><div class="col-6 col-lg-3"><h4>Reach us</h4><ul class="soc"><li><a href="${CFG.instagramUrl||'#'}" target="_blank" rel="noopener"><svg class="si" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.4" cy="6.6" r="1" fill="currentColor" stroke="none"/></svg><span>Instagram</span></a></li><li><a href="https://wa.me/${String(CFG.whatsappNumber).replace(/\D/g,'')}" target="_blank" rel="noopener"><svg class="si" viewBox="0 0 24 24" aria-hidden="true"><path d="M4.3 19.7l1.1-3.9A8.3 8.3 0 1 1 8.6 19z"/><path d="M9 8.3c.2-.5.5-.5.8-.5h.5c.2 0 .4 0 .5.4l.7 1.6c.1.2 0 .4-.1.6l-.5.6c-.1.1-.2.3 0 .5.5.9 1.3 1.7 2.3 2.2.2.1.4.1.5 0l.6-.7c.2-.2.4-.2.6-.1l1.6.8c.2.1.3.3.3.5 0 .4-.1 1-.6 1.4-.5.4-1.2.6-2 .4-1.4-.4-3.2-1.5-4.4-3.2C8.6 11.3 8.4 9.7 9 8.3z" fill="currentColor" stroke="none"/></svg><span>WhatsApp</span></a></li></ul></div></div>
+<div class="row g-4 mt-4"><div class="col-6 col-lg-3"><h4>Reach us</h4><ul class="soc"><li><a href="${CFG.instagramUrl||'#'}" target="_blank" rel="noopener" aria-label="AANGAN on Instagram"><svg class="si-c" viewBox="0 0 48 48" aria-hidden="true"><defs><radialGradient id="igg" cx="0.3" cy="1.07" r="1.2"><stop offset="0" stop-color="#FFDD55"/><stop offset=".1" stop-color="#FFDD55"/><stop offset=".5" stop-color="#FF543E"/><stop offset="1" stop-color="#C837AB"/></radialGradient><radialGradient id="igb" cx="-0.17" cy="0.07" r="0.7"><stop offset="0" stop-color="#3771C8"/><stop offset=".13" stop-color="#3771C8"/><stop offset="1" stop-color="#6600FF" stop-opacity="0"/></radialGradient></defs><rect width="48" height="48" rx="12" fill="url(#igg)"/><rect width="48" height="48" rx="12" fill="url(#igb)"/><rect x="11" y="11" width="26" height="26" rx="8" fill="none" stroke="#fff" stroke-width="3"/><circle cx="24" cy="24" r="6.3" fill="none" stroke="#fff" stroke-width="3"/><circle cx="31.6" cy="16.4" r="1.9" fill="#fff"/></svg></a></li><li><a href="${wa('')}" target="_blank" rel="noopener" aria-label="Chat with AANGAN on WhatsApp"><svg class="si-c" viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="24" fill="#25D366"/><path d="M12.6 35.4l1.6-5.8a11.9 11.9 0 1 1 4.6 4.4z" fill="none" stroke="#fff" stroke-width="2.4" stroke-linejoin="round"/><path d="M19.6 17.9c.3-.7.7-.7 1.1-.7h.7c.3 0 .6 0 .8.6l1 2.4c.1.3 0 .6-.1.8l-.7.9c-.2.2-.3.4 0 .7.7 1.3 1.9 2.4 3.3 3.2.3.1.5.1.7-.1l.9-1c.2-.3.5-.3.8-.2l2.3 1.1c.3.2.5.4.5.7 0 .6-.2 1.4-.9 2-.7.6-1.7.8-2.8.5-2-.6-4.6-2.1-6.3-4.6-1.6-2.4-1.9-4.6-1.3-6.3z" fill="#fff"/></svg></a></li></ul></div></div>
 <div class="bt d-flex justify-content-between flex-wrap gap-2"><span>© <span id="yr"></span> AANGAN. All rights reserved.</span><a href="#main">Back to top ↑</a></div></div></footer>`;
 document.body.insertAdjacentHTML('afterbegin',hdr);document.body.insertAdjacentHTML('beforeend',ft);
 $('#yr').textContent=new Date().getFullYear();
 /* Panels */
 const scrim=$('#scrim');const closeAll=()=>{$$('.panel').forEach(p=>p.classList.remove('open'));scrim.classList.remove('open')};
-const open=id=>{closeAll();$('#p-'+id).classList.add('open');scrim.classList.add('open');if(id=='search')setTimeout(()=>$('#q').focus(),300)};
-$$('[data-open]').forEach(b=>b.onclick=()=>{if(b.dataset.open=='bag'&&step!='done')step='bag';open(b.dataset.open);render()});
+const open=id=>{closeAll();$('#p-'+id).classList.add('open');scrim.classList.add('open')};
+$$('[data-open]').forEach(b=>b.onclick=()=>{if(b.dataset.open=='bag'&&step!='done')step='bag';if(b.dataset.open=='custom')customForm();open(b.dataset.open);render()});
 $$('[data-close]').forEach(b=>b.onclick=closeAll);scrim.onclick=closeAll;document.addEventListener('keydown',e=>{if(e.key=='Escape')closeAll()});
 const ddb=$('.dd button');if(ddb)ddb.onclick=()=>{const d=ddb.parentElement;d.classList.toggle('open');ddb.setAttribute('aria-expanded',d.classList.contains('open'))};
 /* Product card */
@@ -70,7 +72,7 @@ function waLink(ref,d){d=d||{};const ids=store.get('ab'),map={};ids.forEach(i=>m
  const x=[`Name: ${d.n||''}`,`WhatsApp: ${d.ph||''}`,`Address: ${d.ad||''}, ${d.ct||''} - ${d.pc||''}`];
  if(d.nt)x.push(`Note: ${d.nt}`);
  const text=`Hello AANGAN! I'd like to place an order (Ref ${ref||'-'}):\n\n${lines.join('\n\n')}\n\nSubtotal: ${inr(sub)}${req?' + items on request':''} (shipping to be confirmed)\n\nDelivery details\n${x.join('\n')}\n\nPlease confirm availability, shipping and the final total. Thank you!`;
- return `https://wa.me/${String(CFG.whatsappNumber).replace(/\D/g,'')}?text=${encodeURIComponent(text)}`}
+ return wa(text)}
 function goWA(ref,d){const u=waLink(ref,d),w=window.open(u,'_blank');if(!w)location.href=u}
 const orderRef=()=>{const t=new Date();return 'AGN-'+String(t.getFullYear()).slice(2)+String(t.getMonth()+1).padStart(2,'0')+String(t.getDate()).padStart(2,'0')+'-'+Math.floor(100+Math.random()*900)};
 const fld=(l,id,type,v,req,ph)=>`<div class="mb-3"><label for="${id}">${l}${req?'':' (optional)'}</label>${type=='ta'?`<textarea id="${id}" rows="2" ${req?'required':''} placeholder="${ph||''}">${v||''}</textarea>`:`<input id="${id}" type="${type}" value="${v||''}" ${req?'required':''} placeholder="${ph||''}" ${type=='tel'?'inputmode="tel" autocomplete="tel"':''}>`}<div class="err" aria-live="polite"></div></div>`;
@@ -92,9 +94,29 @@ function formView(rows){const d=getD(),n=rows.reduce((a,r)=>a+r.q,0),priced=rows
 function doneView(){$('#bl').innerHTML=`<div class="done"><h4>Almost there</h4><p class="ref">${lastRef}</p><p>WhatsApp should have opened with your order ready. Send the message, and we will confirm availability, shipping and your total.</p>
  <button class="btn-a w-100 justify-content-center" id="rw">Open WhatsApp again</button><button class="btn-b w-100 justify-content-center mt-2" id="nb2">Start a new bag</button></div>`;$('#bf').innerHTML='';
  $('#rw').onclick=()=>goWA(lastRef,getD());$('#nb2').onclick=()=>{store.set('ab',[]);step='bag';render()}}
+
+/* Custom creation: brief details -> WhatsApp */
+function customForm(){const el=$('#cc');if(!el)return;const d=getD();
+ el.innerHTML=`<p class="small">Tell us briefly what you have in mind. WhatsApp then opens with your request ready to send, and we will reply with ideas and a price.</p>
+ <form id="ccf" class="fm" novalidate>${fld('What would you like us to make?','cw','ta','',1,'e.g. a pair of Shubh Labh hangings in red and gold with my family name')}
+ ${fld('Occasion or date needed','co2','text','',0,'e.g. Diwali, a wedding on 5 December')}${fld('Budget','cb','text','',0,'e.g. around 1500')}
+ ${fld('Your name','cn','text',d.n,1)}${fld('WhatsApp number','cp','tel',d.ph,1,'10-digit mobile number')}
+ <button class="btn-a w-100 justify-content-center" type="submit">Continue on WhatsApp</button></form>`;
+ const f=$('#ccf');f.onsubmit=e=>{e.preventDefault();const v={};['cw','co2','cb','cn','cp'].forEach(k=>v[k]=f.querySelector('#'+k).value.trim());
+  const bad={};if(!v.cw)bad.cw='Please tell us what you would like.';if(!v.cn)bad.cn='Please enter your name.';if(!/^(\+?91)?[6-9]\d{9}$/.test(v.cp.replace(/[\s-]/g,'')))bad.cp='Enter a valid 10-digit mobile number.';
+  ['cw','cn','cp'].forEach(k=>{const i=f.querySelector('#'+k);i.parentElement.querySelector('.err').textContent=bad[k]||'';i.setAttribute('aria-invalid',!!bad[k])});
+  if(Object.keys(bad).length){const first=f.querySelector('[aria-invalid=true]');if(first)first.focus();return}
+  const x=[`What I'd like: ${v.cw}`];if(v.co2)x.push(`Occasion / needed by: ${v.co2}`);if(v.cb)x.push(`Budget: ${v.cb}`);
+  const text=`Hello AANGAN! I'd like to request a custom creation.\n\n${x.join('\n')}\n\nName: ${v.cn}\nWhatsApp: ${v.cp}\n\nPlease let me know what is possible. Thank you!`;
+  const u=wa(text),w=window.open(u,'_blank');if(!w)location.href=u;
+  el.innerHTML=`<div class="done"><h4>Almost there</h4><p>WhatsApp should have opened with your request ready. Send the message, and we will reply with ideas and a price.</p><button class="btn-a w-100 justify-content-center" id="ccw">Open WhatsApp again</button><button class="btn-b w-100 justify-content-center mt-2" id="ccn">Start a new request</button></div>`;
+  $('#ccw').onclick=()=>{const w2=window.open(u,'_blank');if(!w2)location.href=u};$('#ccn').onclick=customForm}}
 /* Sale offers block */
-function saleRender(){const sec=$('#sale');if(!sec)return;const l=P.filter(p=>off(p)).sort((a,b)=>off(b)-off(a));
- sec.hidden=!l.length;if(!l.length)return;$('#saleTop').textContent=off(l[0]);
+function saleRender(){const sec=$('#sale');if(!sec)return;const l=P.filter(p=>off(p)).sort((a,b)=>off(b)-off(a)||(b.mrp-b.price)-(a.mrp-a.price));
+ sec.hidden=!l.length;if(!l.length)return;$('#saleTop').textContent=CFG.salePercent||off(l[0]);
+ const sl=$('#saleLabel span');if(sl)sl.textContent=CFG.saleLabel;if(CFG.saleHeadline&&$('#saleHead'))$('#saleHead').textContent=CFG.saleHeadline;
+ const ss=$('#saleSub');if(ss)ss.textContent=`${CFG.salePercent?'Flat '+CFG.salePercent:'Up to '+off(l[0])}% off ${l.length==P.filter(p=>p.price!=null).length?'every handmade piece':'selected handmade pieces'}. The offer price is shown on each one.`;
+ const su=$('.sale-num .up');if(su)su.textContent=CFG.salePercent?'Flat':'Up to';
  $('#saleGrid').innerHTML=l.slice(0,3).map(p=>`<a class="stile" href="product.html?id=${p.id}"><div class="simg"><img src="${p.image}" alt="${p.alt||p.name}" loading="lazy" width="1086" height="1448"></div><div class="scap"><h3>${p.name}</h3><div class="sp"><span class="now">${inr(p.price)}</span><s class="was">${inrWas(p.mrp)}</s></div><span class="soff">${off(p)}% off · Save ${inr(p.mrp-p.price)}</span></div></a>`).join('')}
 /* Shop: price filter + sort (dropdowns above the grid) */
 const S={max:null,sort:'featured'};
@@ -117,9 +139,6 @@ document.addEventListener('click',e=>{const t=e.target.closest('[data-add],[data
  if(t.dataset.dec){const i=a.indexOf(t.dataset.dec);if(i>-1)a.splice(i,1)}
  if(t.dataset.rm)a=a.filter(x=>x!=t.dataset.rm);
  store.set('ab',a);if(t.dataset.add){step='bag';open('bag')}if(t.dataset.buy){step='form';open('bag')}render()});
-$('#q').oninput=e=>{const v=e.target.value.trim().toLowerCase(),r=$('#qr');if(!v){r.innerHTML='';return}
- const m=P.filter(p=>(p.name+' '+((C[p.category]||{}).name||'')).toLowerCase().includes(v));
- r.innerHTML=m.length?m.map(p=>`<p><a href="product.html?id=${p.id}">${p.name}</a> — ${inr(p.price)}</p>`).join(''):`<p>${P.length?'No matches. Try a different word.':'The catalogue is empty for now.'}</p>`};
 /* Collection preview (home) */
 const pv=$('.colprev');if(pv)$$('.crow').forEach(r=>{const set=()=>{const img=$('img.pi',pv),bl=$('.blank',pv);if(r.dataset.img){img.src=r.dataset.img;img.hidden=false;bl.hidden=true}else{img.hidden=true;bl.hidden=false}$$('.crow').forEach(x=>x.classList.toggle('on',x==r))};r.addEventListener('mouseenter',set);r.addEventListener('focus',set)});
 /* Forms (demo — no backend) */

@@ -365,3 +365,22 @@ main{min-height:68vh}
  .sale-tiles{margin:0 -1.25rem!important;padding:0 1.25rem .5rem!important;scroll-padding-left:1.25rem}
  .pc .body>.d-flex:last-child>*{margin:0!important}
 }
+
+/* ===== v8: Diwali banner, footer centre + brand icons, custom request ===== */
+.foot .fwm{margin-left:auto!important;margin-right:auto!important}
+.foot .soc{display:flex;gap:.9rem;padding:0;margin:0;list-style:none}
+.foot .soc li{margin:0}
+.foot .soc a{display:inline-flex;border-radius:12px;transition:transform .3s,opacity .3s}
+.foot .soc a:hover{transform:translateY(-2px);opacity:.92}
+.foot .si-c{width:38px;height:38px;display:block}
+.fcta button.btn-a{border:0;cursor:pointer}
+/* Diwali sale banner: warm glow and diya */
+.sale-hero{overflow:hidden;background:radial-gradient(120% 90% at 12% 18%,rgba(175,141,86,.32),rgba(175,141,86,0) 55%),radial-gradient(80% 70% at 95% 100%,rgba(185,103,73,.35),rgba(185,103,73,0) 60%),var(--burg)}
+.sale-hero::before{content:"";position:absolute;inset:0;pointer-events:none;opacity:.55;background-image:radial-gradient(circle,rgba(241,178,74,.9) 0 1.2px,transparent 1.6px),radial-gradient(circle,rgba(255,244,214,.7) 0 1px,transparent 1.4px);background-size:90px 90px,140px 140px;background-position:10px 20px,60px 75px;-webkit-mask-image:linear-gradient(90deg,#000 0%,rgba(0,0,0,.25) 45%,transparent 60%);mask-image:linear-gradient(90deg,#000 0%,rgba(0,0,0,.25) 45%,transparent 60%)}
+.sale-hero>*{position:relative}
+.sale-copy .label{gap:.6rem}
+.sale-copy .label .diya{width:26px;height:26px;color:var(--gold);flex:0 0 auto;filter:drop-shadow(0 0 6px rgba(241,178,74,.75));animation:diyaflick 3s ease-in-out infinite}
+@keyframes diyaflick{0%,100%{filter:drop-shadow(0 0 5px rgba(241,178,74,.6))}50%{filter:drop-shadow(0 0 11px rgba(241,178,74,.95))}}
+#saleTop{text-shadow:0 0 28px rgba(241,178,74,.35)}
+@media(prefers-reduced-motion:reduce){.sale-copy .label .diya{animation:none}}
+.sale-line{line-height:1.15}
