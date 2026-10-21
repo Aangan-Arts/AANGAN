@@ -1,10 +1,12 @@
 /* Product detail page */
 (function(){
 const A=window.AANGAN,P=window.AANGAN_PRODUCTS,C=window.AANGAN_COLLECTIONS,el=document.getElementById('pdp');
-const id=new URLSearchParams(location.search).get('id'),p=P.find(x=>x.id==id);
+const id=window.AANGAN_PID||new URLSearchParams(location.search).get('id'),p=P.find(x=>x.id==id);
+/* old product.html?id= links move to the product's own address (keeps one address per product for Google) */
+if(!window.AANGAN_PID&&p&&p.url&&/^https?:/.test(location.protocol)){location.replace(new URL(p.url,document.baseURI).href);return}
 function draw(){
  if(!p){el.innerHTML='<div class="empty"><h3>We could not find that piece</h3><p>It may have been moved or is no longer listed.</p><a class="btn-a" href="index.html">Back to shop</a></div>';return}
- document.title=p.name+' | AANGAN — Where Tradition Glows';
+ document.title=p.name+' | AANGAN';
  const rel=P.filter(x=>x.id!=p.id&&x.category==p.category).concat(P.filter(x=>x.id!=p.id&&x.category!=p.category)).slice(0,3);
  el.innerHTML=`<nav class="crumb" aria-label="Breadcrumb"><a href="index.html">Shop</a> / ${p.name}</nav>
  <div class="pdp-grid"><div class="pdp-img"><img src="${p.image}" alt="${p.alt}" width="1086" height="1448" fetchpriority="high"></div>

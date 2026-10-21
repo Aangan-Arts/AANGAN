@@ -4,6 +4,8 @@ window.AANGAN_COLLECTIONS = {};
 window.AANGAN_PRODUCTS = [
  {
   "id": "20261020_1000",
+  "slug": "handcrafted-pink-thread-and-pearl-decorative-tealight-holder-set",
+  "url": "p/handcrafted-pink-thread-and-pearl-decorative-tealight-holder-set/",
   "name": "Handcrafted Pink Thread and Pearl Decorative Tealight Holder Set",
   "price": 150,
   "mrp": 187,
@@ -25,6 +27,8 @@ window.AANGAN_PRODUCTS = [
  },
  {
   "id": "20261020_1001",
+  "slug": "handcrafted-pink-lotus-decorative-tealight-holder-set",
+  "url": "p/handcrafted-pink-lotus-decorative-tealight-holder-set/",
   "name": "Handcrafted Pink Lotus Decorative Tealight Holder Set",
   "price": 300,
   "mrp": 375,
@@ -46,6 +50,8 @@ window.AANGAN_PRODUCTS = [
  },
  {
   "id": "20261020_1002",
+  "slug": "handcrafted-floral-pearl-tealight-holder-set",
+  "url": "p/handcrafted-floral-pearl-tealight-holder-set/",
   "name": "Handcrafted Floral Pearl Tealight Holder Set",
   "price": 135,
   "mrp": 169,
@@ -68,6 +74,8 @@ window.AANGAN_PRODUCTS = [
  },
  {
   "id": "20261020_1003",
+  "slug": "handcrafted-lotus-and-rose-decorative-tealight-runner",
+  "url": "p/handcrafted-lotus-and-rose-decorative-tealight-runner/",
   "name": "Handcrafted Lotus and Rose Decorative Tealight Runner",
   "price": 399,
   "mrp": 499,
@@ -89,6 +97,8 @@ window.AANGAN_PRODUCTS = [
  },
  {
   "id": "20261020_142420",
+  "slug": "handcrafted-pink-lotus-decorative-diya-pair-with-golden-mirror",
+  "url": "p/handcrafted-pink-lotus-decorative-diya-pair-with-golden-mirror/",
   "name": "Handcrafted Pink Lotus Decorative Diya Pair with Golden Mirror Work and Pearl Embellishments",
   "price": 250,
   "mrp": 312,
@@ -112,6 +122,8 @@ window.AANGAN_PRODUCTS = [
  },
  {
   "id": "20261020_142857",
+  "slug": "handcrafted-pink-floral-decorative-diya-holder-pair-with-pearl",
+  "url": "p/handcrafted-pink-floral-decorative-diya-holder-pair-with-pearl/",
   "name": "Handcrafted Pink Floral Decorative Diya Holder Pair with Pearl Border",
   "price": 300,
   "mrp": 375,
@@ -135,6 +147,8 @@ window.AANGAN_PRODUCTS = [
  },
  {
   "id": "20261020_143333",
+  "slug": "handcrafted-pearl-embellished-floral-diya-set",
+  "url": "p/handcrafted-pearl-embellished-floral-diya-set/",
   "name": "Handcrafted Pearl Embellished Floral Diya Set",
   "price": 250,
   "mrp": 315,
@@ -155,6 +169,8 @@ window.AANGAN_PRODUCTS = [
  },
  {
   "id": "20261020_144604",
+  "slug": "handcrafted-shubh-lotus-pearl-door-hanging-set",
+  "url": "p/handcrafted-shubh-lotus-pearl-door-hanging-set/",
   "name": "Handcrafted Shubh Lotus Pearl Door Hanging Set",
   "price": 150,
   "mrp": 189,
@@ -175,6 +191,8 @@ window.AANGAN_PRODUCTS = [
  },
  {
   "id": "20261020_144927",
+  "slug": "handcrafted-pink-lotus-decorative-diya-holder-pair-with-golden",
+  "url": "p/handcrafted-pink-lotus-decorative-diya-holder-pair-with-golden/",
   "name": "Handcrafted Pink Lotus Decorative Diya Holder Pair with Golden Mirror Work",
   "price": 700,
   "mrp": 875,
@@ -198,6 +216,8 @@ window.AANGAN_PRODUCTS = [
  },
  {
   "id": "20261020_145319",
+  "slug": "handcrafted-peacock-decorative-diya-holder-pair-with-green-stonework",
+  "url": "p/handcrafted-peacock-decorative-diya-holder-pair-with-green-stonework/",
   "name": "Handcrafted Peacock Decorative Diya Holder Pair with Green Stonework and Golden Embellishments",
   "price": 700,
   "mrp": 875,
@@ -221,6 +241,8 @@ window.AANGAN_PRODUCTS = [
  },
  {
   "id": "20261020_145455",
+  "slug": "traditional-peacock-shubh-labh-hanging-pair-with-pearl-embellishments",
+  "url": "p/traditional-peacock-shubh-labh-hanging-pair-with-pearl-embellishments/",
   "name": "Traditional Peacock Shubh Labh Hanging Pair with Pearl Embellishments and Golden Accents",
   "price": 180,
   "mrp": 225,
@@ -244,6 +266,8 @@ window.AANGAN_PRODUCTS = [
  },
  {
   "id": "20261020_145722",
+  "slug": "handcrafted-pink-lotus-shubh-labh-hanging-pair-with-pearl",
+  "url": "p/handcrafted-pink-lotus-shubh-labh-hanging-pair-with-pearl/",
   "name": "Handcrafted Pink Lotus Shubh Labh Hanging Pair with Pearl Tassels and Golden Embroidery",
   "price": 300,
   "mrp": 375,
@@ -267,6 +291,8 @@ window.AANGAN_PRODUCTS = [
  },
  {
   "id": "20261020_150001",
+  "slug": "handcrafted-pink-lotus-shubh-labh-hanging-pair-with-pearl-2",
+  "url": "p/handcrafted-pink-lotus-shubh-labh-hanging-pair-with-pearl-2/",
   "name": "Handcrafted Pink Lotus Shubh Labh Hanging Pair with Pearl Tassels",
   "price": 299,
   "mrp": 375,
@@ -290,6 +316,8 @@ window.AANGAN_PRODUCTS = [
  },
  {
   "id": "20261020_150128",
+  "slug": "traditional-pearl-lotus-shubh-labh-hanging-pair-with-golden",
+  "url": "p/traditional-pearl-lotus-shubh-labh-hanging-pair-with-golden/",
   "name": "Traditional Pearl Lotus Shubh Labh Hanging Pair with Golden Accents",
   "price": 150,
   "mrp": 189,
@@ -313,6 +341,8 @@ window.AANGAN_PRODUCTS = [
  },
  {
   "id": "20261020_150213",
+  "slug": "handcrafted-shubh-labh-lotus-door-hanging",
+  "url": "p/handcrafted-shubh-labh-lotus-door-hanging/",
   "name": "Handcrafted Shubh Labh Lotus Door Hanging",
   "price": 150,
   "mrp": 189,
@@ -333,6 +363,8 @@ window.AANGAN_PRODUCTS = [
  },
  {
   "id": "20261020_150249",
+  "slug": "handcrafted-shubh-labh-pearl-door-hanging",
+  "url": "p/handcrafted-shubh-labh-pearl-door-hanging/",
   "name": "Handcrafted Shubh Labh Pearl Door Hanging",
   "price": 220,
   "mrp": 275,
@@ -353,6 +385,8 @@ window.AANGAN_PRODUCTS = [
  },
  {
   "id": "20261020_150422",
+  "slug": "traditional-pink-lotus-pearl-latkan-pair-with-shree-shubh",
+  "url": "p/traditional-pink-lotus-pearl-latkan-pair-with-shree-shubh/",
   "name": "Traditional Pink Lotus Pearl Latkan Pair with Shree Shubh Labh Design",
   "price": 549,
   "mrp": 689,
@@ -376,6 +410,8 @@ window.AANGAN_PRODUCTS = [
  },
  {
   "id": "20261020_150707",
+  "slug": "handcrafted-floral-pearl-toran-with-decorative-roses-and-golden",
+  "url": "p/handcrafted-floral-pearl-toran-with-decorative-roses-and-golden/",
   "name": "Handcrafted Floral Pearl Toran with Decorative Roses and Golden Embellishments",
   "price": 699,
   "mrp": 875,
@@ -398,6 +434,8 @@ window.AANGAN_PRODUCTS = [
  },
  {
   "id": "20261020_160950",
+  "slug": "handcrafted-ganesha-lotus-pearl-toran",
+  "url": "p/handcrafted-ganesha-lotus-pearl-toran/",
   "name": "Handcrafted Ganesha Lotus Pearl Toran",
   "price": 1999,
   "mrp": 2499,
@@ -418,6 +456,8 @@ window.AANGAN_PRODUCTS = [
  },
  {
   "id": "20261020_161214",
+  "slug": "handcrafted-shubh-labh-radha-krishna-pearl-toran",
+  "url": "p/handcrafted-shubh-labh-radha-krishna-pearl-toran/",
   "name": "Handcrafted Shubh Labh Radha Krishna Pearl Toran",
   "price": 2199,
   "mrp": 2749,

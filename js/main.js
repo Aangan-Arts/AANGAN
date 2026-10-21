@@ -7,6 +7,8 @@ const store={get:k=>{try{return JSON.parse(localStorage.getItem(k))||[]}catch(e)
 const inr=n=>n==null?'Price on request':String(Math.round(Number(n)));
 const inrWas=n=>Number(n).toLocaleString('en-IN');
 const CFG=Object.assign({whatsappNumber:'',siteUrl:'',instagramUrl:'',salePercent:null,saleLabel:'Sale offers',saleHeadline:''},window.AANGAN_CONFIG||{});
+/* product link: clean address like p/handcrafted-ganesha-lotus-pearl-toran/ (falls back to product.html?id=) */
+const purl=p=>p.url||('product.html?id='+p.id);
 /* every WhatsApp link on the site uses the number in js/config.js */
 const wa=text=>`https://wa.me/${String(CFG.whatsappNumber).replace(/\D/g,'')}${text?`?text=${encodeURIComponent(text)}`:''}`;
 const off=p=>{if(!(p.price!=null&&p.mrp&&p.mrp>p.price))return 0;const r=Math.round((p.mrp-p.price)/p.mrp*100);return CFG.salePercent?Math.min(r,CFG.salePercent):r};
@@ -39,9 +41,9 @@ $$('[data-open]').forEach(b=>b.onclick=()=>{if(b.dataset.open=='bag'&&step!='don
 $$('[data-close]').forEach(b=>b.onclick=closeAll);scrim.onclick=closeAll;document.addEventListener('keydown',e=>{if(e.key=='Escape')closeAll()});
 const ddb=$('.dd button');if(ddb)ddb.onclick=()=>{const d=ddb.parentElement;d.classList.toggle('open');ddb.setAttribute('aria-expanded',d.classList.contains('open'))};
 /* Product card */
-const card=p=>`<article class="pc"><a href="product.html?id=${p.id}" class="pimg" aria-label="View ${p.name}"><div class="ph"><img src="${p.image}" alt="${p.alt||p.name}" loading="lazy" width="1086" height="1448"></div></a>
-<div class="body"><h3><a href="product.html?id=${p.id}">${p.name}</a></h3><div class="pr">${inr(p.price)}${offer(p)}</div><div class="live-sm" data-live="${p.id}" hidden></div>
-<div class="d-flex gap-2 flex-wrap mt-3"><a class="btn-b sm" href="product.html?id=${p.id}">View details</a>${p.available===false?'<span class="small align-self-center">Currently unavailable</span>':`<button class="btn-a sm" data-add="${p.id}">Add to bag</button>`}</div></div></article>`;
+const card=p=>`<article class="pc"><a href="${purl(p)}" class="pimg" aria-label="View ${p.name}"><div class="ph"><img src="${p.image}" alt="${p.alt||p.name}" loading="lazy" width="1086" height="1448"></div></a>
+<div class="body"><h3><a href="${purl(p)}">${p.name}</a></h3><div class="pr">${inr(p.price)}${offer(p)}</div><div class="live-sm" data-live="${p.id}" hidden></div>
+<div class="d-flex gap-2 flex-wrap mt-3"><a class="btn-b sm" href="${purl(p)}">View details</a>${p.available===false?'<span class="small align-self-center">Currently unavailable</span>':`<button class="btn-a sm" data-add="${p.id}">Add to bag</button>`}</div></div></article>`;
 const emptyMsg=t=>`<div class="empty"><h3>${t}</h3><p>Products appear here once they are added to <code>js/products.js</code>. In the meantime, tell us what you are looking for.</p></div>`;
 function grid(el,list){if(!el)return;el.innerHTML=list.length?`<div class="row g-4">${list.map(p=>`<div class="col-6 col-lg-4">${card(p)}</div>`).join('')}</div>`:emptyMsg(el.dataset.empty||'New pieces are on their way')}
 const shopCat=new URLSearchParams(location.search).get('c');
@@ -52,8 +54,8 @@ function bag(){const ids=store.get('ab'),map={};ids.forEach(i=>map[i]=(map[i]||0
  if(step=='done'){doneView();return}
  if(step=='form'&&rows.length){formView(rows);return}
  if(step=='form')step='bag';
- $('#bl').innerHTML=rows.length?rows.map(({p,q})=>`<div class="bi"><a href="product.html?id=${p.id}"><img src="${p.image}" alt="${p.alt||p.name}" width="64" height="85"></a>
- <div class="bt2"><a class="bn" href="product.html?id=${p.id}">${p.name}</a><span class="bp">${inr(p.price)}${p.mrp>p.price?` <s class="was">${inrWas(p.mrp)}</s>`:''}</span>
+ $('#bl').innerHTML=rows.length?rows.map(({p,q})=>`<div class="bi"><a href="${purl(p)}"><img src="${p.image}" alt="${p.alt||p.name}" width="64" height="85"></a>
+ <div class="bt2"><a class="bn" href="${purl(p)}">${p.name}</a><span class="bp">${inr(p.price)}${p.mrp>p.price?` <s class="was">${inrWas(p.mrp)}</s>`:''}</span>
  <div class="qty"><button data-dec="${p.id}" aria-label="Decrease quantity">−</button><span>${q}</span><button data-inc="${p.id}" aria-label="Increase quantity">+</button><button class="rm" data-rm="${p.id}">Remove</button></div></div></div>`).join(''):'<p class="mt-3">Your bag is empty.</p><a class="btn-b" href="index.html">Continue shopping</a>';
  const priced=rows.filter(r=>r.p.price!=null),sub=priced.reduce((a,r)=>a+r.p.price*r.q,0);
  $('#bf').innerHTML=rows.length?`<div class="sub"><span>Subtotal</span><b>${priced.length?inr(sub):'—'}</b></div><button class="btn-a w-100 justify-content-center" id="co">Checkout</button><p class="small mt-3 mb-0">Next we take your delivery details, then continue on WhatsApp. You pay only after we confirm availability and your total.</p>`:'';
@@ -65,10 +67,10 @@ let step='bag',lastRef='';
 const DK='aangan_details';
 const getD=()=>{try{return JSON.parse(localStorage.getItem(DK))||{}}catch(e){return{}}};
 function waLink(ref,d){d=d||{};const ids=store.get('ab'),map={};ids.forEach(i=>map[i]=(map[i]||0)+1);
- const base=CFG.siteUrl||(/^https?:/.test(location.href)?location.href.split('?')[0].replace(/[^/]*$/,''):'');let sub=0,req=false;
+ const base=CFG.siteUrl||(/^https?:/.test(location.href)?new URL('./',document.baseURI).href:'');let sub=0,req=false;
  const lines=Object.entries(map).map(([i,q],k)=>{const p=P.find(x=>x.id==i);if(!p)return'';let l=`${k+1}. ${p.name}\n   `;
   if(p.price==null){req=true;l+=`Qty ${q} · Price on request`}else{sub+=p.price*q;l+=`Qty ${q} × ${inr(p.price)} = ${inr(p.price*q)}`}
-  if(base)l+=`\n   ${base}product.html?id=${p.id}`;return l}).filter(Boolean);
+  if(base)l+=`\n   ${base}${purl(p)}`;return l}).filter(Boolean);
  const x=[`Name: ${d.n||''}`,`WhatsApp: ${d.ph||''}`,`Address: ${d.ad||''}, ${d.ct||''} - ${d.pc||''}`];
  if(d.nt)x.push(`Note: ${d.nt}`);
  const text=`Hello AANGAN! I'd like to place an order (Ref ${ref||'-'}):\n\n${lines.join('\n\n')}\n\nSubtotal: ${inr(sub)}${req?' + items on request':''} (shipping to be confirmed)\n\nDelivery details\n${x.join('\n')}\n\nPlease confirm availability, shipping and the final total. Thank you!`;
@@ -90,7 +92,9 @@ function formView(rows){const d=getD(),n=rows.reduce((a,r)=>a+r.q,0),priced=rows
   ['n','ph','ad','ct','pc'].forEach(k=>{const i=f.querySelector('#'+k);i.parentElement.querySelector('.err').textContent=bad[k]||'';i.setAttribute('aria-invalid',!!bad[k])});
   if(Object.keys(bad).length){const first=f.querySelector('[aria-invalid=true]');if(first)first.focus();return}
   try{localStorage.setItem(DK,JSON.stringify({n:v.n,ph:v.ph,ad:v.ad,ct:v.ct,pc:v.pc}))}catch(e){}
-  lastRef=orderRef();step='done';goWA(lastRef,v);bag()}}
+  lastRef=orderRef();step='done';
+  {const ids=store.get('ab'),items=ids.map(i=>P.find(p=>p.id==i)).filter(Boolean);window.AANGAN_TRACK&&AANGAN_TRACK('whatsapp_order',{transaction_id:lastRef,currency:'INR',value:items.reduce((a,p)=>a+(p.price||0),0),items:items.map(p=>({item_id:p.id,item_name:p.name,price:p.price||0,quantity:1}))})}
+  goWA(lastRef,v);bag()}}
 function doneView(){$('#bl').innerHTML=`<div class="done"><h4>Almost there</h4><p class="ref">${lastRef}</p><p>WhatsApp should have opened with your order ready. Send the message, and we will confirm availability, shipping and your total.</p>
  <button class="btn-a w-100 justify-content-center" id="rw">Open WhatsApp again</button><button class="btn-b w-100 justify-content-center mt-2" id="nb2">Start a new bag</button></div>`;$('#bf').innerHTML='';
  $('#rw').onclick=()=>goWA(lastRef,getD());$('#nb2').onclick=()=>{store.set('ab',[]);step='bag';render()}}
@@ -108,6 +112,7 @@ function customForm(){const el=$('#cc');if(!el)return;const d=getD();
   if(Object.keys(bad).length){const first=f.querySelector('[aria-invalid=true]');if(first)first.focus();return}
   const x=[`What I'd like: ${v.cw}`];if(v.co2)x.push(`Occasion / needed by: ${v.co2}`);if(v.cb)x.push(`Budget: ${v.cb}`);
   const text=`Hello AANGAN! I'd like to request a custom creation.\n\n${x.join('\n')}\n\nName: ${v.cn}\nWhatsApp: ${v.cp}\n\nPlease let me know what is possible. Thank you!`;
+  window.AANGAN_TRACK&&AANGAN_TRACK('custom_request_sent',{has_budget:!!v.cb,has_date:!!v.co2});
   const u=wa(text),w=window.open(u,'_blank');if(!w)location.href=u;
   el.innerHTML=`<div class="done"><h4>Almost there</h4><p>WhatsApp should have opened with your request ready. Send the message, and we will reply with ideas and a price.</p><button class="btn-a w-100 justify-content-center" id="ccw">Open WhatsApp again</button><button class="btn-b w-100 justify-content-center mt-2" id="ccn">Start a new request</button></div>`;
   $('#ccw').onclick=()=>{const w2=window.open(u,'_blank');if(!w2)location.href=u};$('#ccn').onclick=customForm}}
@@ -117,7 +122,7 @@ function saleRender(){const sec=$('#sale');if(!sec)return;const l=P.filter(p=>of
  const sl=$('#saleLabel span');if(sl)sl.textContent=CFG.saleLabel;if(CFG.saleHeadline&&$('#saleHead'))$('#saleHead').textContent=CFG.saleHeadline;
  const ss=$('#saleSub');if(ss)ss.textContent=`${CFG.salePercent?'Flat '+CFG.salePercent:'Up to '+off(l[0])}% off ${l.length==P.filter(p=>p.price!=null).length?'every handmade piece':'selected handmade pieces'}. The offer price is shown on each one.`;
  const su=$('.sale-num .up');if(su)su.textContent=CFG.salePercent?'Flat':'Up to';
- $('#saleGrid').innerHTML=l.slice(0,3).map(p=>`<a class="stile" href="product.html?id=${p.id}"><div class="simg"><img src="${p.image}" alt="${p.alt||p.name}" loading="lazy" width="1086" height="1448"></div><div class="scap"><h3>${p.name}</h3><div class="sp"><span class="now">${inr(p.price)}</span><s class="was">${inrWas(p.mrp)}</s></div><span class="soff">${off(p)}% off · Save ${inr(p.mrp-p.price)}</span></div></a>`).join('')}
+ $('#saleGrid').innerHTML=l.slice(0,3).map(p=>`<a class="stile" href="${purl(p)}"><div class="simg"><img src="${p.image}" alt="${p.alt||p.name}" loading="lazy" width="1086" height="1448"></div><div class="scap"><h3>${p.name}</h3><div class="sp"><span class="now">${inr(p.price)}</span><s class="was">${inrWas(p.mrp)}</s></div><span class="soff">${off(p)}% off · Save ${inr(p.mrp-p.price)}</span></div></a>`).join('')}
 /* Shop: price filter + sort (dropdowns above the grid) */
 const S={max:null,sort:'featured'};
 function shopList(){const l=P.filter(p=>(!shopCat||p.category==shopCat)&&(S.max==null||(p.price!=null&&p.price<S.max)));
@@ -151,5 +156,5 @@ $$('form[data-demo]').forEach(f=>{f.noValidate=true;f.onsubmit=e=>{e.preventDefa
  if(!bad)f.reset()}});
 if('IntersectionObserver' in window){const io=new IntersectionObserver(es=>es.forEach(x=>{if(x.isIntersecting){x.target.classList.add('in');io.unobserve(x.target)}}),{threshold:.1});$$('.rv').forEach(n=>io.observe(n))}else $$('.rv').forEach(n=>n.classList.add('in'));
 render();
-window.AANGAN={card,store,inr,inrWas,offer,off};
+window.AANGAN={card,store,inr,inrWas,offer,off,purl};
 })();
