@@ -14,7 +14,8 @@
   /* every WhatsApp link on the site uses the number in js/config.js */
   const wa = text => `https://wa.me/${String(CFG.whatsappNumber).replace(/\D/g, '')}${text ? `?text=${encodeURIComponent(text)}` : ''}`;
   const off = p => { if (!(p.price != null && p.mrp && p.mrp > p.price)) return 0; const r = Math.round((p.mrp - p.price) / p.mrp * 100); return CFG.salePercent ? Math.min(r, CFG.salePercent) : r };
-  const offer = p => off(p) ? ` <s class="was">${inrWasDisplay(p.mrp)}</s> <span class="off">${off(p)}% off</span>` : '';
+  const was = p => off(p) ? `<s class="was">${inrWasDisplay(p.mrp)}</s>` : '';
+  const offer = p => off(p) ? `<span class="off">${off(p)}% off</span>` : '';
   const ic = { s: '<circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/>', b: '<path d="M5 8h14l-1 12H6zM9 8a3 3 0 0 1 6 0"/>', m: '<path d="M4 8h16M4 16h16"/>', x: '<path d="M6 6l12 12M18 6 6 18"/>' };
   const svg = k => `<svg viewBox="0 0 24 24" aria-hidden="true">${ic[k]}</svg>`;
   const page = document.body.dataset.page || '';
@@ -44,8 +45,8 @@
   const ddb = $('.dd button'); if (ddb) ddb.onclick = () => { const d = ddb.parentElement; d.classList.toggle('open'); ddb.setAttribute('aria-expanded', d.classList.contains('open')) };
   /* Product card */
   const card = p => `<article class="pc"><a href="${purl(p)}" class="pimg" aria-label="View ${p.name}"><div class="ph"><img src="${p.image}" alt="${p.alt || p.name}" loading="lazy" width="1086" height="1448"></div></a>
-<div class="body"><h3><a href="${purl(p)}">${p.name}</a></h3><div class="pr">${inrDisplay(p.price)}${offer(p)}</div><div class="live-sm" data-live="${p.id}" hidden></div>
-<div class="d-flex gap-2 flex-wrap mt-3"><a class="btn-b sm" href="${purl(p)}">View details</a>${p.available === false ? '<span class="small align-self-center">Currently unavailable</span>' : `<button class="btn-a sm" data-add="${p.id}">Add to bag</button>`}</div></div></article>`;
+<div class="body"><h3><a href="${purl(p)}">${p.name}</a></h3><div class="pr">${inrDisplay(p.price)} ${was(p)} ${offer(p)}</div><div class="live-sm" data-live="${p.id}" hidden></div>
+<div class="d-flex gap-2 flex-wrap mt-3">${p.available === false ? '<span class="small align-self-center">Currently unavailable</span>' : `<button class="btn-b sm" data-add="${p.id}">Add to bag</button><button class="btn-a sm" data-buy="${p.id}">Buy now</button>`}</div></div></article>`;
   const emptyMsg = t => `<div class="empty"><h3>${t}</h3><p>Products appear here once they are added to <code>js/products.js</code>. In the meantime, tell us what you are looking for.</p></div>`;
   function grid(el, list) { if (!el) return; el.innerHTML = list.length ? `<div class="row g-4">${list.map(p => `<div class="col-6 col-lg-4">${card(p)}</div>`).join('')}</div>` : emptyMsg(el.dataset.empty || 'New pieces are on their way') }
   const shopCat = new URLSearchParams(location.search).get('c');
@@ -70,7 +71,7 @@
   let step = 'bag', lastRef = '';
   const DK = 'aangan_details';
   const getD = () => { try { return JSON.parse(localStorage.getItem(DK)) || {} } catch (e) { return {} } };
-  function waLink(ref, d) {
+  function orderMessage(ref, d) {
     d = d || {}; const ids = store.get('ab'), map = {}; ids.forEach(i => map[i] = (map[i] || 0) + 1);
     const base = CFG.siteUrl || (/^https?:/.test(location.href) ? new URL('./', document.baseURI).href : ''); let sub = 0, req = false;
     const lines = Object.entries(map).map(([i, q], k) => {
@@ -80,9 +81,9 @@
     }).filter(Boolean);
     const x = [`Name: ${d.n || ''}`, `WhatsApp: ${d.ph || ''}`, `Address: ${d.ad || ''}, ${d.ct || ''} - ${d.pc || ''}`];
     if (d.nt) x.push(`Note: ${d.nt}`);
-    const text = `Hello AANGAN! I'd like to place an order (Ref ${ref || '-'}):\n\n${lines.join('\n\n')}\n\nSubtotal: ${inr(sub)}${req ? ' + items on request' : ''} (shipping to be confirmed)\n\nDelivery details\n${x.join('\n')}\n\nPlease confirm availability, shipping and the final total. Thank you!`;
-    return wa(text)
+    return `Hello AANGAN! I'd like to place an order (Ref ${ref || '-'}):\n\n${lines.join('\n\n')}\n\nSubtotal: ${inr(sub)}${req ? ' + items on request' : ''} (shipping to be confirmed)\n\nDelivery details\n${x.join('\n')}\n\nPlease confirm availability, shipping and the final total. Thank you!`
   }
+  const waLink = (ref, d) => wa(orderMessage(ref, d));
   function goWA(ref, d) { const u = waLink(ref, d), w = window.open(u, '_blank'); if (!w) location.href = u }
   const orderRef = () => { const t = new Date(); return 'AGN-' + String(t.getFullYear()).slice(2) + String(t.getMonth() + 1).padStart(2, '0') + String(t.getDate()).padStart(2, '0') + '-' + Math.floor(100 + Math.random() * 900) };
   const fld = (l, id, type, v, req, ph) => `<div class="mb-3"><label for="${id}">${l}${req ? '' : ' (optional)'}</label>${type == 'ta' ? `<textarea id="${id}" rows="2" ${req ? 'required' : ''} placeholder="${ph || ''}">${v || ''}</textarea>` : `<input id="${id}" type="${type}" value="${v || ''}" ${req ? 'required' : ''} placeholder="${ph || ''}" ${type == 'tel' ? 'inputmode="tel" autocomplete="tel"' : ''}>`}<div class="err" aria-live="polite"></div></div>`;
@@ -94,14 +95,20 @@
  <div class="row g-2"><div class="col-7">${fld('City', 'ct', 'text', d.ct, 1)}</div><div class="col-5">${fld('Pincode', 'pc', 'text', d.pc, 1, '6 digits')}</div></div>
  ${fld('Note', 'nt', 'ta', '', 0, 'Gift note, colours or anything we should know')}
  <button class="btn-a w-100 justify-content-center" type="submit">Continue on WhatsApp</button></form>
- <ol class="steps small"><li>WhatsApp opens with your order and details ready.</li><li>We confirm availability, shipping and your total.</li><li>You pay once we confirm. Nothing is charged before this.</li></ol>`;
+ <ol class="steps small"><li>WhatsApp opens with your order details ready.</li><li>We confirm availability, shipping and your total.</li><li>You pay once we confirm. Nothing is charged before this.</li></ol>`;
     $('#bf').innerHTML = ''; $('#bk').onclick = () => { step = 'bag'; bag() };
-    const f = $('#cf'); f.onsubmit = e => {
-      e.preventDefault(); const v = {};['n', 'ph', 'ad', 'ct', 'pc', 'nt'].forEach(k => v[k] = f.querySelector('#' + k).value.trim());
+    const f = $('#cf');
+    const getOrderDetails = () => {
+      const v = {};['n', 'ph', 'ad', 'ct', 'pc', 'nt'].forEach(k => v[k] = f.querySelector('#' + k).value.trim());
       const ph = v.ph.replace(/[\s-]/g, ''), bad = {}; if (!v.n) bad.n = 'Please enter your name.'; if (!/^(\+?91)?[6-9]\d{9}$/.test(ph)) bad.ph = 'Enter a valid 10-digit mobile number.'; if (!v.ad) bad.ad = 'Please enter your address.'; if (!v.ct) bad.ct = 'Please enter your city.'; if (!/^\d{6}$/.test(v.pc)) bad.pc = 'Enter a 6-digit pincode.';
       ['n', 'ph', 'ad', 'ct', 'pc'].forEach(k => { const i = f.querySelector('#' + k); i.parentElement.querySelector('.err').textContent = bad[k] || ''; i.setAttribute('aria-invalid', !!bad[k]) });
-      if (Object.keys(bad).length) { const first = f.querySelector('[aria-invalid=true]'); if (first) first.focus(); return }
+      if (Object.keys(bad).length) { const first = f.querySelector('[aria-invalid=true]'); if (first) first.focus(); return null }
       try { localStorage.setItem(DK, JSON.stringify({ n: v.n, ph: v.ph, ad: v.ad, ct: v.ct, pc: v.pc })) } catch (e) { }
+      return v;
+    };
+    f.onsubmit = e => {
+      e.preventDefault(); const v = getOrderDetails();
+      if (!v) return;
       lastRef = orderRef(); step = 'done';
       { const ids = store.get('ab'), items = ids.map(i => P.find(p => p.id == i)).filter(Boolean); window.AANGAN_TRACK && AANGAN_TRACK('whatsapp_order', { transaction_id: lastRef, currency: 'INR', value: items.reduce((a, p) => a + (p.price || 0), 0), items: items.map(p => ({ item_id: p.id, item_name: p.name, price: p.price || 0, quantity: 1 })) }) }
       goWA(lastRef, v); bag()
@@ -188,5 +195,5 @@
   });
   if ('IntersectionObserver' in window) { const io = new IntersectionObserver(es => es.forEach(x => { if (x.isIntersecting) { x.target.classList.add('in'); io.unobserve(x.target) } }), { threshold: .1 }); $$('.rv').forEach(n => io.observe(n)) } else $$('.rv').forEach(n => n.classList.add('in'));
   render();
-  window.AANGAN = { card, store, inr, inrWas, inrDisplay, inrWasDisplay, offer, off, purl };
+  window.AANGAN = { card, store, inr, inrWas, inrDisplay, inrWasDisplay, was, offer, off, purl };
 })();
