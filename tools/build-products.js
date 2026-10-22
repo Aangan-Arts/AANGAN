@@ -72,12 +72,14 @@ window.AANGAN_PRODUCTS = ${JSON.stringify(forJs, null, 1)};
 `);
 
 /* ---------- shared pieces (same markup and price rules as js/main.js) ---------- */
-const inr = n => n == null ? 'Price on request' : String(Math.round(n));
-const inrWas = n => Number(n).toLocaleString('en-IN');
+const inr = n => n == null ? 'Price on request' : `₹${String(Math.round(n))}`;
+const inrWas = n => `₹${Number(n).toLocaleString('en-IN')}`;
+const inrDisplay = n => n == null ? 'Price on request' : `<span class="currency">₹</span>${String(Math.round(n))}`;
+const inrWasDisplay = n => `<span class="currency">₹</span>${Number(n).toLocaleString('en-IN')}`;
 const off = p => { if (!(p.price != null && p.mrp && p.mrp > p.price)) return 0; const r = Math.round((p.mrp - p.price) / p.mrp * 100); return salePct ? Math.min(r, salePct) : r; };
-const offer = p => off(p) ? ` <s class="was">${inrWas(p.mrp)}</s> <span class="off">${off(p)}% off</span>` : '';
+const offer = p => off(p) ? ` <s class="was">${inrWasDisplay(p.mrp)}</s> <span class="off">${off(p)}% off</span>` : '';
 const card = p => `<article class="pc"><a href="${p.url}" class="pimg" aria-label="View ${esc(p.name)}"><div class="ph"><img src="${p.image}" alt="${esc(p.alt)}" loading="lazy" width="1086" height="1448"></div></a>
-<div class="body"><h3><a href="${p.url}">${esc(p.name)}</a></h3><div class="pr">${inr(p.price)}${offer(p)}</div><div class="live-sm" data-live="${p.id}" hidden></div>
+<div class="body"><h3><a href="${p.url}">${esc(p.name)}</a></h3><div class="pr">${inrDisplay(p.price)}${offer(p)}</div><div class="live-sm" data-live="${p.id}" hidden></div>
 <div class="d-flex gap-2 flex-wrap mt-3"><a class="btn-b sm" href="${p.url}">View details</a>${p.available === false ? '<span class="small align-self-center">Currently unavailable</span>' : `<button class="btn-a sm" data-add="${p.id}">Add to bag</button>`}</div></div></article>`;
 const gridHtml = list => `<div class="row g-4">${list.map(p => `<div class="col-6 col-lg-4">${card(p)}</div>`).join('')}</div>`;
 const abs = u => SITE + u.replace(/^\//, '');
@@ -138,7 +140,7 @@ for (const p of products) {
   const care = Array.isArray(p.care) ? p.care : (p.care ? [p.care] : []);
   const body = `<nav class="crumb" aria-label="Breadcrumb"><a href="index.html">Shop</a> / ${esc(p.name)}</nav>
 <div class="pdp-grid"><div class="pdp-img"><img src="${p.image}" alt="${esc(p.alt)}" width="1086" height="1448" fetchpriority="high"></div>
-<div class="pdp"><h1>${esc(p.name)}</h1><p class="price">${inr(p.price)}${offer(p)}</p>${off(p) ? `<p class="save">You save ${inr(p.mrp - p.price)}</p>` : ''}<div class="live" data-live="${p.id}" hidden></div>
+<div class="pdp"><h1>${esc(p.name)}</h1><p class="price">${inrDisplay(p.price)}${offer(p)}</p>${off(p) ? `<p class="save">You save ${inrDisplay(p.mrp - p.price)}</p>` : ''}<div class="live" data-live="${p.id}" hidden></div>
 <p class="mt-4">${esc(p.desc)}</p>
 <div class="ctas">${p.available === false ? '<span class="note">Currently unavailable</span>' : `<button class="btn-b" data-add="${p.id}">Add to bag</button><button class="btn-a" data-buy="${p.id}">Buy now</button>`}</div>
 <div class="acc mt-4">${Object.keys(p.details).length ? `<details open><summary>Details</summary><dl>${Object.entries(p.details).map(([k, v]) => `<dt>${esc(k)}</dt><dd>${esc(v)}</dd>`).join('')}</dl></details>` : ''}
@@ -146,8 +148,10 @@ ${care.length ? `<details><summary>Care</summary><ul>${care.map(c => `<li>${esc(
 <div class="mt-5 pt-5"><h2 class="mb-5">You may also love</h2>${gridHtml(rel)}</div>`;
   const productLd = ld({
     '@context': 'https://schema.org', '@graph': [
-      { '@type': 'Product', '@id': abs(p.url) + '#product', name: p.name, description: p.desc, image: [abs(p.image)], sku: p.id, url: abs(p.url),
-        brand: { '@type': 'Brand', name: 'AANGAN' }, material: undefined, offers: offerLd(p) },
+      {
+        '@type': 'Product', '@id': abs(p.url) + '#product', name: p.name, description: p.desc, image: [abs(p.image)], sku: p.id, url: abs(p.url),
+        brand: { '@type': 'Brand', name: 'AANGAN' }, material: undefined, offers: offerLd(p)
+      },
       { '@type': 'BreadcrumbList', itemListElement: [{ '@type': 'ListItem', position: 1, name: 'Shop', item: SITE }, { '@type': 'ListItem', position: 2, name: p.name, item: abs(p.url) }] },
       org
     ]

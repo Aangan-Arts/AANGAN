@@ -1,6 +1,7 @@
 /* AANGAN — six official colours only */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600&display=swap');
 :root{--ivory:#FFF;--terra:#B96749;--burg:#622B30;--olive:#898B72;--gold:#AF8D56;--brown:#332720;
---serif:'Cormorant Garamond',Georgia,serif;--sans:'DM Sans',system-ui,sans-serif}
+--serif:'Cormorant Garamond',Georgia,serif;--sans:'DM Sans',system-ui,sans-serif;--price:'Noto Sans',var(--sans)}
 html{scroll-behavior:smooth}
 body{background:var(--ivory);color:var(--brown);font-family:var(--sans);line-height:1.7;overflow-x:hidden}
 h1,h2,h3,h4{font-family:var(--serif);font-weight:500;line-height:1.1;color:var(--brown)}
@@ -51,7 +52,8 @@ a{color:inherit}:focus-visible{outline:2px solid var(--burg);outline-offset:3px}
 .cc .lk{color:var(--burg);font-size:.9rem;border-bottom:1px solid var(--gold)}.cc .lk i{display:inline-block;transition:transform .3s;font-style:normal}.cc:hover .lk i{transform:translateX(6px)}
 .pc{position:relative;border:1px solid rgba(175,141,86,.5);background:var(--ivory);transition:box-shadow .3s}.pc:hover{box-shadow:0 10px 28px rgba(51,39,32,.1)}
 .pc .ph{aspect-ratio:1/1}.pc .ph img{width:100%;max-width:none;mix-blend-mode:normal;opacity:1;height:100%;object-fit:cover}
-.pc .body{padding:1rem}.pc .cat{font-size:.8rem;color:var(--olive)}.pc .pr{color:var(--burg);font-weight:500}
+.pc .body{padding:1rem}.pc .cat{font-size:.8rem;color:var(--olive)}.pc .pr{color:var(--burg);font-family:var(--price);font-weight:500}
+.currency{font-family:var(--price);font-size:0.9em;line-height:inherit;vertical-align:baseline;margin-right:.08em}
 .pc .wl{position:absolute;top:.4rem;right:.4rem;z-index:2}.wl.on svg{fill:var(--burg);stroke:var(--burg)}
 .empty{border:1px dashed var(--gold);padding:3rem 1.5rem;text-align:center;max-width:42rem;margin:auto}
 .hl{border-top:1px solid var(--gold);padding-top:1rem}
@@ -158,7 +160,7 @@ main{min-height:68vh}
 .sale p{margin:0;line-height:1.4}.sale .k{font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;color:var(--terra)}.sale .m{font-size:.9rem}.sale .t{font-size:.76rem;color:var(--olive)}
 .sale a{text-decoration:none;border-bottom:1px solid var(--gold)}.sale button{position:absolute;top:.35rem;right:.6rem;background:none;border:0;font-size:1.3rem;color:var(--brown);line-height:1}
 .crumb{font-size:.85rem;margin-bottom:2rem;color:var(--olive)}.crumb a{text-decoration:none}
-.pdp h1{font-size:clamp(2.2rem,4vw,3.4rem);margin:.4rem 0 .8rem}.pdp .price{font-size:1.6rem;color:var(--burg);font-family:var(--serif);margin-bottom:1rem}
+.pdp h1{font-size:clamp(2.2rem,4vw,3.4rem);margin:.4rem 0 .8rem}.pdp .price{font-size:1.6rem;color:var(--burg);font-family:var(--price);margin-bottom:1rem}
 .pdp .photo,#pdp .photo{border-radius:24px;overflow:hidden;border:1px solid var(--gold)}.pdp .photo img{aspect-ratio:3/4}
 .acc details{border-top:1px solid rgba(175,141,86,.6);padding:1rem 0}.acc details:last-child{border-bottom:1px solid rgba(175,141,86,.6)}
 .acc summary{cursor:pointer;font-family:var(--serif);font-size:1.3rem}.acc dl{display:grid;grid-template-columns:auto 1fr;gap:.4rem 1.4rem;margin:1rem 0 0}.acc dt{color:var(--olive);font-weight:400}.acc dd{margin:0}
@@ -219,9 +221,9 @@ main{min-height:68vh}
 @media(max-width:991.98px){.pdp-grid{grid-template-columns:1fr}.pdp-img{height:auto;width:min(100%,calc(60svh*.75));margin:0 auto}}
 /* bag drawer */
 .bi{display:flex;gap:1rem;padding:1.1rem 0;border-bottom:1px solid rgba(175,141,86,.6)}.bi img{width:64px;height:85px;object-fit:cover;border-radius:8px;display:block}
-.bt2{display:flex;flex-direction:column;gap:.2rem;flex:1}.bn{font-family:var(--serif);font-size:1.25rem;text-decoration:none;line-height:1.2}.bp{color:var(--burg)}
+.bt2{display:flex;flex-direction:column;gap:.2rem;flex:1}.bn{font-family:var(--serif);font-size:1.25rem;text-decoration:none;line-height:1.2}.bp{color:var(--burg);font-family:var(--price)}
 .qty{display:flex;align-items:center;gap:.5rem;margin-top:.4rem}.qty button{border:1px solid var(--gold);background:none;width:30px;height:30px;border-radius:50%;color:var(--brown)}.qty .rm{border:0;width:auto;margin-left:auto;font-size:.8rem;text-decoration:underline}
-.sub{display:flex;justify-content:space-between;padding:1.2rem 0;font-size:1.1rem}
+.sub{display:flex;justify-content:space-between;padding:1.2rem 0;font-size:1.1rem}.sub b{font-family:var(--price)}
 .pc .body{padding:1.4rem 1.5rem 1.6rem}
 
 /* ===== v6: premium two-tier nav, compact collections, product page that fits the screen ===== */
@@ -270,7 +272,7 @@ main{min-height:68vh}
 /* ===== v11: checkout flow ===== */
 .panel .back{background:none;border:0;padding:0;font-size:.85rem;color:var(--burg);text-decoration:underline}
 .panel h4{font-family:var(--serif);font-size:1.7rem}.panel .fm{margin-top:1rem}.panel .fm .row{margin:0 -.3rem}
-.sumline{display:flex;justify-content:space-between;padding:.8rem 0;border-top:1px solid rgba(175,141,86,.6);border-bottom:1px solid rgba(175,141,86,.6);margin:1rem 0 .4rem}
+.sumline{display:flex;justify-content:space-between;padding:.8rem 0;border-top:1px solid rgba(175,141,86,.6);border-bottom:1px solid rgba(175,141,86,.6);margin:1rem 0 .4rem}.sumline b{font-family:var(--price)}
 .steps{padding-left:1.1rem;margin:1.4rem 0 .8rem;line-height:1.6}.steps li{margin-bottom:.35rem}
 .done .ref{font-family:var(--sans);font-weight:600;font-size:1.5rem;letter-spacing:.06em;color:var(--burg);border:1px solid var(--gold);display:inline-block;padding:.4rem 1rem;border-radius:999px;margin:.4rem 0 1rem}
 .panel textarea{width:100%;background:transparent;border:1px solid var(--gold);padding:.7rem .9rem;color:var(--brown);font:inherit}
@@ -291,8 +293,8 @@ main{min-height:68vh}
 .stile{display:block;text-decoration:none;color:var(--ivory)}.stile:nth-child(2){margin-top:2rem}.stile:nth-child(3){margin-top:.8rem}
 .simg{aspect-ratio:4/5;border-radius:16px;overflow:hidden;background:var(--ivory)}.simg img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .7s}.stile:hover .simg img{transform:scale(1.05)}
 .scap{padding:.9rem .1rem 0}.scap h3{font-size:1.2rem;line-height:1.2;color:var(--ivory);margin:0 0 .4rem}
-.scap .sp{display:flex;align-items:baseline;gap:.6rem}.scap .now{font-family:var(--sans);font-weight:600;font-size:1.15rem;color:var(--ivory)}.scap .was{font-size:.82rem;color:var(--ivory);opacity:.6;text-decoration:line-through}
-.scap .cur{font-size:1em}.soff{display:block;margin-top:.35rem;font-size:.76rem;letter-spacing:.1em;text-transform:uppercase;color:var(--gold)}
+.scap .sp{display:flex;align-items:baseline;gap:.6rem}.scap .now{font-family:var(--price);font-weight:600;font-size:1.15rem;color:var(--ivory)}.scap .was{font-family:var(--price);font-size:.82rem;color:var(--ivory);opacity:.6;text-decoration:line-through}
+.scap .cur{font-size:1em}.soff{display:block;margin-top:.35rem;font-family:var(--price);font-size:.76rem;letter-spacing:.1em;text-transform:uppercase;color:var(--gold)}
 @media(max-width:991.98px){.sale-hero{grid-template-columns:1fr}.stile:nth-child(n){margin-top:0}}
 @media(max-width:767.98px){
  .sale-hero{border-radius:24px;padding:2.2rem 1.25rem 2rem;outline-offset:-10px;gap:1.8rem}
@@ -303,15 +305,15 @@ main{min-height:68vh}
 #shop-all{scroll-margin-top:1rem}
 
 /* offer price next to the price */
-.pr .was,.pdp .price .was,.bp .was{font-family:var(--sans);font-size:.8em;color:var(--olive);margin-left:.4rem}
+.pr .was,.pdp .price .was,.bp .was{font-family:var(--price);font-size:.8em;color:var(--olive);margin-left:.4rem}
 .pr .off,.pdp .price .off{font-family:var(--sans);font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;border:1px solid var(--gold);color:var(--brown);padding:.12rem .5rem;border-radius:999px;margin-left:.4rem;vertical-align:middle}
 .visually-hidden{position:absolute!important;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 /* footer tagline centred */
 .foot .ftag{text-align:center}
 /* product page price: same font style as the sale banner price */
-.pdp .price{font-family:var(--sans);font-weight:600}
+.pdp .price{font-family:var(--price);font-weight:600}
 .pdp .price .was{font-weight:400}
-.pdp .save{font-family:var(--sans);font-size:.95rem;color:var(--terra);margin:-.4rem 0 1rem}
+.pdp .save{font-family:var(--price);font-size:.95rem;color:var(--terra);margin:-.4rem 0 1rem}
 /* space above the product grid when there are no sale offers to show */
 #sale[hidden]+.shop-sec{padding-top:clamp(1.8rem,4vw,3rem)}
 
