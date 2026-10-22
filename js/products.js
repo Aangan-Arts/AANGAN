@@ -49,6 +49,114 @@ window.AANGAN_PRODUCTS = [
   "dispatch": ""
  },
  {
+  "id": "20261020_10010",
+  "slug": "handcrafted-red-rose-pearl-tealight-holder-set",
+  "url": "p/handcrafted-red-rose-pearl-tealight-holder-set/",
+  "name": "Handcrafted Red Rose Pearl Tealight Holder Set",
+  "price": 299,
+  "mrp": 375,
+  "category": "",
+  "image": "Products/web/20261020_10010.jpg..png",
+  "alt": "Handcrafted Red Rose Pearl Tealight Holder Set",
+  "available": true,
+  "desc": "Brighten your festive decor with this handcrafted set featuring rich red roses, elegant pearl borders, mirror embellishments, and golden detailing. Perfect for Diwali celebrations, pooja decor, and festive table styling.",
+  "details": {},
+  "care": [
+   "Dust gently with a soft, dry cloth.",
+   "Avoid water and harsh cleaning chemicals.",
+   "Keep artificial flowers away from direct heat and open flames.",
+   "Use LED tealights for safer lighting around floral decorations.",
+   "Store in a dry, protective box when not in use."
+  ],
+  "dispatch": ""
+ },
+ {
+  "id": "20261020_10011",
+  "slug": "handcrafted-floral-pearl-tealight-holder-set-of-6",
+  "url": "p/handcrafted-floral-pearl-tealight-holder-set-of-6/",
+  "name": "Handcrafted Floral Pearl Tealight Holder Set of 6",
+  "price": 399,
+  "mrp": 499,
+  "category": "",
+  "image": "Products/web/20261020_10011.jpg..png",
+  "alt": "Handcrafted Floral Pearl Tealight Holder Set of 6",
+  "available": true,
+  "desc": "Elevate your festive decor with this handcrafted set of six tealight holders, featuring vibrant pink roses, golden metal holders, delicate pearl borders, and elegant golden embellishments. Perfect for Diwali, pooja decor, festive table styling, and special occasions.",
+  "details": {},
+  "care": [
+   "Clean gently with a soft, dry cloth.",
+   "Avoid water and harsh chemicals.",
+   "Keep artificial flowers and pearls away from direct heat.",
+   "Use LED tealights for safer lighting around floral decorations.",
+   "Store in a dry, protective box when not in use."
+  ],
+  "dispatch": ""
+ },
+ {
+  "id": "20261020_10012",
+  "slug": "aqua-blue-floral-tealight-holders",
+  "url": "p/aqua-blue-floral-tealight-holders/",
+  "name": "Aqua Blue Floral Tealight Holders",
+  "price": 250,
+  "mrp": 315,
+  "category": "",
+  "image": "Products/web/20261020_10012.jpg..png",
+  "alt": "Aqua Blue Floral Tealight Holders",
+  "available": true,
+  "desc": "Add a touch of elegance to your festive decor with these flower-shaped tealight holders, featuring aqua blue stones, pearl detailing, and a golden finish. Perfect for Diwali celebrations, pooja, and festive gifting.",
+  "details": {},
+  "care": [
+   "Wipe gently with a soft, dry cloth.",
+   "Keep away from water and harsh chemicals.",
+   "Handle pearls and stones carefully.",
+   "Store in a dry, protective box.",
+   "Use LED tealights for safer decoration."
+  ],
+  "dispatch": ""
+ },
+ {
+  "id": "20261020_10013",
+  "slug": "golden-floral-diya-holders-with-pink-yellow-pom-poms",
+  "url": "p/golden-floral-diya-holders-with-pink-yellow-pom-poms/",
+  "name": "Golden Floral Diya Holders with Pink & Yellow Pom-Poms",
+  "price": 180,
+  "mrp": 225,
+  "category": "",
+  "image": "Products/web/20261020_10013.jpg..png",
+  "alt": "Golden Floral Diya Holders with Pink & Yellow Pom-Poms",
+  "available": true,
+  "desc": "Brighten your festive décor with this vibrant pair of handcrafted diya holders, featuring golden floral detailing, pink and yellow pom-poms, and elegant pearl accents. Perfect for Diwali celebrations, pooja décor, festive tables, and traditional home styling.",
+  "details": {},
+  "care": [
+   "Clean gently with a soft, dry cloth.",
+   "Keep away from water and harsh chemicals.",
+   "Handle pom-poms and pearl embellishments with care.",
+   "Store in a cool, dry place after use."
+  ],
+  "dispatch": ""
+ },
+ {
+  "id": "20261020_10014",
+  "slug": "red-gold-floral-diya-holders-with-pearl-and-crystal",
+  "url": "p/red-gold-floral-diya-holders-with-pearl-and-crystal/",
+  "name": "Red & Gold Floral Diya Holders with Pearl and Crystal Accents",
+  "price": 220,
+  "mrp": 275,
+  "category": "",
+  "image": "Products/web/20261020_10014.jpg..png",
+  "alt": "Red & Gold Floral Diya Holders with Pearl and Crystal Accents",
+  "available": true,
+  "desc": "Add a touch of festive elegance to your home with this beautiful pair of floral diya holders. Featuring rich red petals, golden detailing, pearl borders, and sparkling crystal accents, they are perfect for Diwali pooja, festive table décor, and traditional celebrations.",
+  "details": {},
+  "care": [
+   "Wipe gently with a soft, dry cloth.",
+   "Avoid water, harsh chemicals, and abrasive cleaners.",
+   "Handle pearls and crystal embellishments carefully.",
+   "Store in a cool, dry place after use."
+  ],
+  "dispatch": ""
+ },
+ {
   "id": "20261020_1002",
   "slug": "handcrafted-floral-pearl-tealight-holder-set",
   "url": "p/handcrafted-floral-pearl-tealight-holder-set/",
@@ -92,6 +200,138 @@ window.AANGAN_PRODUCTS = [
    "Keep artificial flowers away from direct heat and open flames.",
    "Keep away from prolonged direct sunlight to preserve the vibrant colours and golden finish.",
    "Store in a dry place in a protective box or fabric bag when not in use."
+  ],
+  "dispatch": ""
+ },
+ {
+  "id": "20261020_1004",
+  "slug": "handcrafted-pink-floral-tealight-holder-set",
+  "url": "p/handcrafted-pink-floral-tealight-holder-set/",
+  "name": "Handcrafted Pink Floral Tealight Holder Set",
+  "price": 220,
+  "mrp": 275,
+  "category": "",
+  "image": "Products/web/20261020_1004.jpg",
+  "alt": "Handcrafted Pink Floral Tealight Holder Set",
+  "available": true,
+  "desc": "A beautiful handcrafted set featuring vibrant pink roses, delicate pearl accents, mirror detailing, and golden tealight holders. Perfect for Diwali, pooja decor, and festive table styling.",
+  "details": {},
+  "care": [
+   "Clean gently with a soft, dry cloth.",
+   "Keep away from water and harsh chemicals.",
+   "Protect flowers and embellishments from direct heat.",
+   "Use on a stable, heat-resistant surface and never leave a lit candle unattended.",
+   "Store in a dry, protective box when not in use."
+  ],
+  "dispatch": ""
+ },
+ {
+  "id": "20261020_1005",
+  "slug": "handcrafted-pink-lotus-peacock-feather-tealight-holder-set",
+  "url": "p/handcrafted-pink-lotus-peacock-feather-tealight-holder-set/",
+  "name": "Handcrafted Pink Lotus Peacock Feather Tealight Holder Set",
+  "price": 499,
+  "mrp": 625,
+  "category": "",
+  "image": "Products/web/20261020_1005.jpg..png",
+  "alt": "Handcrafted Pink Lotus Peacock Feather Tealight Holder Set",
+  "available": true,
+  "desc": "Enhance your festive decor with this handcrafted tealight holder set, featuring vibrant pink lotus motifs, peacock feather-inspired accents, golden detailing, and elegant pearl embellishments. Perfect for Diwali, pooja rooms, and festive table styling.",
+  "details": {},
+  "care": [
+   "Clean gently with a soft, dry cloth.",
+   "Keep away from water and harsh chemicals.",
+   "Protect decorative embellishments from excessive heat.",
+   "Place on a stable, heat-resistant surface when using tealights.",
+   "Store in a dry, protective box when not in use."
+  ],
+  "dispatch": ""
+ },
+ {
+  "id": "20261020_1006",
+  "slug": "handcrafted-pink-lotus-decorative-tealight-holder-set-2",
+  "url": "p/handcrafted-pink-lotus-decorative-tealight-holder-set-2/",
+  "name": "Handcrafted Pink Lotus Decorative Tealight Holder Set",
+  "price": 350,
+  "mrp": 440,
+  "category": "",
+  "image": "Products/web/20261020_1006.jpg..jpeg",
+  "alt": "Handcrafted Pink Lotus Decorative Tealight Holder Set",
+  "available": true,
+  "desc": "Add elegance to your festive decor with this handcrafted tealight holder set, featuring vibrant pink lotus motifs, intricate golden detailing, mirror accents, and delicate pearl embellishments. Perfect for Diwali, pooja rooms, and festive table decor.",
+  "details": {},
+  "care": [
+   "Clean gently with a soft, dry cloth.",
+   "Avoid water and harsh chemicals.",
+   "Keep decorative fabric and embellishments away from direct heat.",
+   "Place on a stable, heat-resistant surface when using tealights.",
+   "Store in a dry, protective box when not in use."
+  ],
+  "dispatch": ""
+ },
+ {
+  "id": "20261020_1007",
+  "slug": "handcrafted-golden-rope-floral-tealight-holder-set",
+  "url": "p/handcrafted-golden-rope-floral-tealight-holder-set/",
+  "name": "Handcrafted Golden Rope Floral Tealight Holder Set",
+  "price": 299,
+  "mrp": 375,
+  "category": "",
+  "image": "Products/web/20261020_1007.jpg..png",
+  "alt": "Handcrafted Golden Rope Floral Tealight Holder Set",
+  "available": true,
+  "desc": "Elevate your festive decor with this handcrafted set featuring a golden braided base, elegant pearl borders, rich red roses, and a stylish tealight holder. Perfect for Diwali, pooja decor, festive tables, and special occasions.",
+  "details": {},
+  "care": [
+   "Clean gently with a soft, dry cloth.",
+   "Keep flowers and pearl embellishments away from water and harsh chemicals.",
+   "Keep decorative flowers away from direct heat and open flames.",
+   "Use LED tealights for safer lighting, or ensure candle flames do not touch the decorations.",
+   "Store in a dry, protective box when not in use."
+  ],
+  "dispatch": ""
+ },
+ {
+  "id": "20261020_1008",
+  "slug": "handcrafted-rose-gold-decorative-tealight-holder-set",
+  "url": "p/handcrafted-rose-gold-decorative-tealight-holder-set/",
+  "name": "Handcrafted Rose Gold Decorative Tealight Holder Set",
+  "price": 199,
+  "mrp": 250,
+  "category": "",
+  "image": "Products/web/20261020_1008.jpg..png",
+  "alt": "Handcrafted Rose Gold Decorative Tealight Holder Set",
+  "available": true,
+  "desc": "Enhance your festive decor with this elegant handcrafted set featuring vibrant red roses, intricate golden detailing, sparkling mirror accents, and delicate pearl embellishments. Perfect for Diwali, pooja decor, festive tables, and special occasions.",
+  "details": {},
+  "care": [
+   "Clean gently with a soft, dry cloth.",
+   "Avoid water and harsh chemicals.",
+   "Keep artificial flowers and embellishments away from direct heat.",
+   "Use LED tealights for safer lighting, or keep open flames away from flowers and decorative elements.",
+   "Store in a dry, protective box when not in use."
+  ],
+  "dispatch": ""
+ },
+ {
+  "id": "20261020_1009",
+  "slug": "handcrafted-teal-rope-floral-tealight-holder-set",
+  "url": "p/handcrafted-teal-rope-floral-tealight-holder-set/",
+  "name": "Handcrafted Teal Rope Floral Tealight Holder Set",
+  "price": 299,
+  "mrp": 375,
+  "category": "",
+  "image": "Products/web/20261020_1009.jpg..png",
+  "alt": "Handcrafted Teal Rope Floral Tealight Holder Set",
+  "available": true,
+  "desc": "Add a refreshing touch to your festive decor with this handcrafted set featuring a teal braided base, elegant pearl borders, rich red roses, and golden tealight holders. Perfect for Diwali, pooja decor, and festive table styling.",
+  "details": {},
+  "care": [
+   "Clean gently with a soft, dry cloth.",
+   "Avoid water and harsh chemicals.",
+   "Keep flowers and pearl embellishments away from direct heat.",
+   "Use LED tealights for safer lighting around floral decorations.",
+   "Store in a dry, protective box when not in use."
   ],
   "dispatch": ""
  },
