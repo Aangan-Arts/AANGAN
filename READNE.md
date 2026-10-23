@@ -11,4 +11,4 @@ cd Projects/Aangan
 node tools/build-products.js
 git add .
 git commit -m "Updated Products"
-git push --set-upstream origin main --force
+git push
