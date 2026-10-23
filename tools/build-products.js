@@ -17,9 +17,18 @@
      details ({"Size": "..."}), dispatch ("Dispatches in 3–5 working days."), slug (optional custom web address)
 */
 const fs = require('fs'), path = require('path');
+const { execFileSync } = require('child_process');
 const root = path.join(__dirname, '..'), dir = path.join(root, 'Products'), webDir = path.join(dir, 'web');
 const read = f => fs.readFileSync(path.join(root, f), 'utf8');
 const write = (f, s) => { fs.mkdirSync(path.dirname(path.join(root, f)), { recursive: true }); fs.writeFileSync(path.join(root, f), s); };
+const ensureCardThumb = (stem, sourcePath) => {
+  const output = path.join(root, 'Products', 'cards', `${stem}.jpg`);
+  fs.mkdirSync(path.dirname(output), { recursive: true });
+  const sourceStat = fs.statSync(sourcePath);
+  if (fs.existsSync(output) && fs.statSync(output).mtimeMs >= sourceStat.mtimeMs) return output;
+  execFileSync('sips', ['-s', 'format', 'jpeg', '-s', 'formatOptions', '72', '-Z', '800', sourcePath, '--out', output], { stdio: 'inherit' });
+  return output;
+};
 
 /* settings from js/config.js */
 const cfgText = read('js/config.js');
@@ -47,14 +56,17 @@ for (const j of jsons) {
   const orig = files.find(f => stemOf(f) === stem && isImg(f));
   if (!web && !orig) { problems.push(`${j}: no image named ${stem}.*, skipped`); continue; }
   const image = web ? `Products/web/${web}` : `Products/${orig}`;
-  const size = fs.statSync(path.join(root, image)).size;
-  if (size > 1.5e6) problems.push(`${image}: ${(size / 1e6).toFixed(1)} MB, slow to load. Add a smaller copy as Products/web/${stem}.jpg`);
+  const sourcePath = path.join(root, image);
+  const size = fs.statSync(sourcePath).size;
+  const cardImagePath = ensureCardThumb(stem, sourcePath);
+  const cardImage = path.relative(root, cardImagePath).replace(/\\/g, '/');
+  if (size > 1.5e6) problems.push(`${image}: ${(size / 1e6).toFixed(1)} MB; detail/zoom image is high resolution. Card listings use ${cardImage}`);
   let slug = d.slug ? slugify(d.slug) : slugify(d.product_title), s0 = slug, k = 2;
   while (used.has(slug)) slug = `${s0}-${k++}`; used.add(slug);
   const num = v => (v === undefined || v === null || v === '' || isNaN(Number(v))) ? null : Number(v);
   products.push({
     id: stem, slug, url: `p/${slug}/`, name: d.product_title, price: num(d.price), mrp: num(d.mrp), category: d.category || '',
-    image, alt: d.product_title, available: d.available !== false, desc: d.product_description || '',
+    image, cardImage: cardImage, alt: d.product_title, available: d.available !== false, desc: d.product_description || '',
     details: d.details || {}, care: d.product_care_suggestion || [], dispatch: d.dispatch || '',
     updated: fs.statSync(path.join(dir, j)).mtime.toISOString().slice(0, 10)
   });
@@ -79,7 +91,7 @@ const inrWasDisplay = n => `<span class="currency">₹</span>${Number(n).toLocal
 const off = p => { if (!(p.price != null && p.mrp && p.mrp > p.price)) return 0; const r = Math.round((p.mrp - p.price) / p.mrp * 100); return salePct ? Math.min(r, salePct) : r; };
 const was = p => off(p) ? `<s class="was">${inrWasDisplay(p.mrp)}</s>` : '';
 const offer = p => off(p) ? `<span class="off">${off(p)}% off</span>` : '';
-const card = p => `<article class="pc"><a href="${p.url}" class="pimg" aria-label="View ${esc(p.name)}"><div class="ph"><img src="${p.image}" alt="${esc(p.alt)}" loading="lazy" width="1086" height="1448"></div></a>
+const card = p => `<article class="pc"><a href="${p.url}" class="pimg" aria-label="View ${esc(p.name)}"><div class="ph"><img src="${p.cardImage}" alt="${esc(p.alt)}" loading="lazy" width="600" height="800"></div></a>
 <div class="body"><h3><a href="${p.url}">${esc(p.name)}</a></h3><div class="pr">${inrDisplay(p.price)} ${was(p)} ${offer(p)}</div><div class="live-sm" data-live="${p.id}" hidden></div>
 <div class="d-flex gap-2 flex-wrap mt-3">${p.available === false ? '<span class="small align-self-center">Currently unavailable</span>' : `<button class="btn-b sm" data-add="${p.id}">Add to bag</button><button class="btn-a sm" data-buy="${p.id}">Buy now</button>`}</div></div></article>`;
 const gridHtml = list => `<div class="row g-4">${list.map(p => `<div class="col-6 col-lg-4">${card(p)}</div>`).join('')}</div>`;

@@ -44,7 +44,7 @@
   $$('[data-close]').forEach(b => b.onclick = closeAll); scrim.onclick = closeAll; document.addEventListener('keydown', e => { if (e.key == 'Escape') closeAll() });
   const ddb = $('.dd button'); if (ddb) ddb.onclick = () => { const d = ddb.parentElement; d.classList.toggle('open'); ddb.setAttribute('aria-expanded', d.classList.contains('open')) };
   /* Product card */
-  const card = p => `<article class="pc"><a href="${purl(p)}" class="pimg" aria-label="View ${p.name}"><div class="ph"><img src="${p.image}" alt="${p.alt || p.name}" loading="lazy" width="1086" height="1448"></div></a>
+  const card = p => `<article class="pc"><a href="${purl(p)}" class="pimg" aria-label="View ${p.name}"><div class="ph"><img src="${p.cardImage || p.image}" alt="${p.alt || p.name}" loading="lazy" width="600" height="800"></div></a>
 <div class="body"><h3><a href="${purl(p)}">${p.name}</a></h3><div class="pr">${inrDisplay(p.price)} ${was(p)} ${offer(p)}</div><div class="live-sm" data-live="${p.id}" hidden></div>
 <div class="d-flex gap-2 flex-wrap mt-3">${p.available === false ? '<span class="small align-self-center">Currently unavailable</span>' : `<button class="btn-b sm" data-add="${p.id}">Add to bag</button><button class="btn-a sm" data-buy="${p.id}">Buy now</button>`}</div></div></article>`;
   const emptyMsg = t => `<div class="empty"><h3>${t}</h3><p>Products appear here once they are added to <code>js/products.js</code>. In the meantime, tell us what you are looking for.</p></div>`;
@@ -58,7 +58,7 @@
     if (step == 'done') { doneView(); return }
     if (step == 'form' && rows.length) { formView(rows); return }
     if (step == 'form') step = 'bag';
-    $('#bl').innerHTML = rows.length ? rows.map(({ p, q }) => `<div class="bi"><a href="${purl(p)}"><img src="${p.image}" alt="${p.alt || p.name}" width="64" height="85"></a>
+    $('#bl').innerHTML = rows.length ? rows.map(({ p, q }) => `<div class="bi"><a href="${purl(p)}"><img src="${p.cardImage || p.image}" alt="${p.alt || p.name}" width="64" height="85"></a>
  <div class="bt2"><a class="bn" href="${purl(p)}">${p.name}</a><span class="bp">${inrDisplay(p.price)}${p.mrp > p.price ? ` <s class="was">${inrWasDisplay(p.mrp)}</s>` : ''}</span>
  <div class="qty"><button data-dec="${p.id}" aria-label="Decrease quantity">−</button><span>${q}</span><button data-inc="${p.id}" aria-label="Increase quantity">+</button><button class="rm" data-rm="${p.id}">Remove</button></div></div></div>`).join('') : '<p class="mt-3">Your bag is empty.</p><a class="btn-b" href="index.html">Continue shopping</a>';
     const priced = rows.filter(r => r.p.price != null), sub = priced.reduce((a, r) => a + r.p.price * r.q, 0);
@@ -148,7 +148,7 @@
     const sl = $('#saleLabel span'); if (sl) sl.textContent = CFG.saleLabel; if (CFG.saleHeadline && $('#saleHead')) $('#saleHead').textContent = CFG.saleHeadline;
     const ss = $('#saleSub'); if (ss) ss.textContent = `${CFG.salePercent ? 'Flat ' + CFG.salePercent : 'Up to ' + off(l[0])}% off ${l.length == P.filter(p => p.price != null).length ? 'every handmade piece' : 'selected handmade pieces'}. The offer price is shown on each one.`;
     const su = $('.sale-num .up'); if (su) su.textContent = CFG.salePercent ? 'Flat' : 'Up to';
-    $('#saleGrid').innerHTML = l.slice(0, 3).map(p => `<a class="stile" href="${purl(p)}"><div class="simg"><img src="${p.image}" alt="${p.alt || p.name}" loading="lazy" width="1086" height="1448"></div><div class="scap"><h3>${p.name}</h3><div class="sp"><span class="now">${inrDisplay(p.price)}</span><s class="was">${inrWasDisplay(p.mrp)}</s></div><span class="soff">${off(p)}% off · Save ${inrDisplay(p.mrp - p.price)}</span></div></a>`).join('')
+    $('#saleGrid').innerHTML = l.slice(0, 3).map(p => `<a class="stile" href="${purl(p)}"><div class="simg"><img src="${p.cardImage || p.image}" alt="${p.alt || p.name}" loading="lazy" width="600" height="800"></div><div class="scap"><h3>${p.name}</h3><div class="sp"><span class="now">${inrDisplay(p.price)}</span><s class="was">${inrWasDisplay(p.mrp)}</s></div><span class="soff">${off(p)}% off · Save ${inrDisplay(p.mrp - p.price)}</span></div></a>`).join('')
   }
   /* Shop: price filter + sort (dropdowns above the grid) */
   const S = { max: null, sort: 'featured' };
